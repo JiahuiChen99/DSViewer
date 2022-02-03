@@ -7,6 +7,11 @@
                 <svg-icon type="mdi" :path="file_icon"/>
                 <span class="ml-5"> {{ selected_file_name }} </span>
             </div>
+
+            <div class="flex justify-center">
+                <DropDown :options="data_structures" @selection="select_ds"/>
+            </div>
+
             <!-- Upload Confirmation Buttons -->
             <div class="flex flex-row justify-center">
                 <IconButton :icon="cancel_icon" status="true" text="Cancel" @click="$emit('buttonClick', false)"/>
@@ -21,21 +26,34 @@
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiClose, mdiFile, mdiUpload } from "@mdi/js";
 import IconButton from "@/components/UI/IconButton";
+import DropDown from "../UI/DropDown";
 
 export default {
     name: "UploadConfirmation",
     components: {
+        DropDown,
         IconButton,
         SvgIcon
     },
     emits: ['buttonClick'],
     props: ['selected_file_name'],
+    methods: {
+        /**
+         * Stores user's DS selection
+         * in vuex
+         * @param selection chosen DS
+         */
+        select_ds: function (selection) {
+            this.$store.commit('select_ds', selection);
+        }
+    },
     data() {
         return {
             file_icon: mdiFile,
             cancel_icon: mdiClose,
             upload_icon: mdiUpload,
             alive: true,
+            data_structures: ['Graph', 'Tree']
         }
     }
 }
