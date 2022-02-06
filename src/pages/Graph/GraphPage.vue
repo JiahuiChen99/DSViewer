@@ -11,7 +11,7 @@ export default {
     name: "GraphPage",
     mounted() {
         let graphID = document.getElementById('graph');
-        let graph = echarts.init(graphID);
+        let graph = echarts.init(graphID, null, { renderer: 'canvas' });
 
         this.load_series_data();
         this.load_series_links();
