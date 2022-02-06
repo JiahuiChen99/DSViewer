@@ -35,6 +35,7 @@ import SvgIcon from "@jamescoyle/vue-icon";
 import {mdiFileUpload} from "@mdi/js";
 import IconButton from "@/components/UI/IconButton";
 import { ref } from 'vue'
+import { parseGraph } from "@/service/parseGraph";
 
 export default {
     name: "ImportDataPage",
@@ -64,7 +65,17 @@ export default {
          */
         confirm_upload: function (buttonID) {
             if ( buttonID ) {
-                // TODO: Process data
+                // Check what data type to process
+                switch ( this.$store.state.data_structure ) {
+                    case 'Graph':
+                        parseGraph(this.data_file);
+                        break;
+                    case 'Tree':
+                        // TODO: Parse Tree
+                        break;
+                    default:
+                        console.log("Not supported DS")
+                }
             }
             // Toggles the popup
             this.toggle_popup();
