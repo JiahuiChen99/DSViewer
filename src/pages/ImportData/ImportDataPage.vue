@@ -35,6 +35,7 @@ import SvgIcon from "@jamescoyle/vue-icon";
 import {mdiFileUpload} from "@mdi/js";
 import IconButton from "@/components/UI/IconButton";
 import { ref } from 'vue'
+import { parseGraph } from "@/service/parseGraph";
 
 export default {
     name: "ImportDataPage",
@@ -54,8 +55,7 @@ export default {
     methods: {
         toggle_popup: function () {
             this.file_selected = !this.file_selected;
-            this.selected_file_name = this.selected_file.name;
-            this.selected_file = "";
+            this.selected_file_name = this.data_file.name;
         },
         /**
          * Upload confirmation
@@ -65,7 +65,17 @@ export default {
          */
         confirm_upload: function (buttonID) {
             if ( buttonID ) {
-                // TODO: Process data
+                // Check what data type to process
+                switch ( this.$store.state.data_structure ) {
+                    case 'Graph':
+                        parseGraph(this.data_file);
+                        break;
+                    case 'Tree':
+                        // TODO: Parse Tree
+                        break;
+                    default:
+                        console.log("Not supported DS")
+                }
             }
             // Toggles the popup
             this.toggle_popup();
@@ -99,7 +109,7 @@ export default {
         return {
             file_selected: false,
             selected_file_name: "",
-            selected_file: null,
+            data_file: null,
             show_popUp : false,
             upload_file_icon: mdiFileUpload
         }
