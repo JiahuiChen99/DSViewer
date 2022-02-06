@@ -5,12 +5,14 @@
 
 <script>
 import * as echarts from "echarts";
-import graphConfig from "@/assets/echartsConfig/graphConfig";
+import { GraphGLChart } from 'echarts-gl/charts';
+import graphGLConfig from "@/assets/echartsConfig/graphGLConfig";
 
 export default {
     name: "GraphPage",
     mounted() {
         let graphID = document.getElementById('graph');
+        echarts.use([GraphGLChart]);
         let graph = echarts.init(graphID, null, { renderer: 'canvas' });
 
         this.load_series_data();
@@ -30,7 +32,7 @@ export default {
     },
     data() {
         return {
-            graph_data: graphConfig,
+            graph_data: graphGLConfig,
             graph_series_data: null,
             graph_series_links: null,
         }
