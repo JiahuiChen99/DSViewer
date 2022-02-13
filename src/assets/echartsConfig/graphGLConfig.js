@@ -26,6 +26,7 @@ let graphGLConfig = {
                 }
             },
             forceAtlas2: {
+                GPU: true,
                 steps: 1,
                 stopThreshold: 20,
                 jitterTolerence: 10,
