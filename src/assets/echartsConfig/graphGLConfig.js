@@ -1,3 +1,4 @@
+import store from "@/vuex/store";
 let graphGLConfig = {
     title: {
         text: 'LS Linked Graph',
@@ -10,6 +11,13 @@ let graphGLConfig = {
         {
             type: 'graphGL',
             roam: true,
+            edgeSymbol: ['circle', 'arrow'],
+            symbolSize: (value, params) => {
+                return store.state.user_followers[params.data.id] === undefined ? 1: store.state.user_followers[params.data.id];
+            },
+            label: {
+                show: true
+            },
             lineStyle: {
                 color: 'rgba(255,255,255,1)'
             },
