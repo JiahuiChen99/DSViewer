@@ -7,6 +7,7 @@ const store = createStore( {
             // Echarts Graph Data
             echarts_graph_series_data: [],
             echarts_graph_series_links: [],
+            user_followers: {},
         }
     },
     mutations: {
@@ -24,6 +25,9 @@ const store = createStore( {
         },
         setGraphsLinks: function (state, links) {
             this.state.echarts_graph_series_links = links;
+        },
+        setUserFollowers: function (state, user_followers) {
+            this.state.user_followers = user_followers;
         }
     }
 });
