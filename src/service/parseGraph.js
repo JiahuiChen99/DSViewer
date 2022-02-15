@@ -23,9 +23,12 @@ function parseGraph(data_file) {
         let people = data['people'];
         let relationships = data['relationships'];
 
+        // IDs Translation array
+        let translator = {};
+
         // Map data to echarts format
-        echartsSeriesData(people);
-        echartsSeriesLink(relationships)
+        echartsSeriesData(people, translator);
+        echartsSeriesLink(relationships, translator);
     })
 }
 
@@ -34,8 +37,10 @@ function parseGraph(data_file) {
  * data objects
  * @param people array of people structs
  * generated from LSLinked project
+ * @param translator map of people's IDs with ID
+ * of the series_data array
  */
-function echartsSeriesData(people) {
+function echartsSeriesData(people, translator) {
     let series_data = [];
     people.forEach( (person) => {
         series_data.push(new EchartsSeriesData(
@@ -43,6 +48,8 @@ function echartsSeriesData(people) {
             person.name,
             0,
         ));
+        // Save the array ID to that person's ID
+        translator[person.id] = series_data.length - 1;
     });
 
     // Save to vuex
@@ -54,13 +61,16 @@ function echartsSeriesData(people) {
  * links objects
  * @param relationships array of relationship structs
  * generated from LSLinked project
+ * @param translator map of people's IDs with ID
+ * of the series_data array
  */
-function echartsSeriesLink(relationships) {
+function echartsSeriesLink(relationships, translator) {
     let series_links = [];
+    let user_followers = {};
     relationships.forEach( (relation) => {
         series_links.push(new EchartsSeriesLink(
-            relation.origin,
-            relation.destination
+            translator[relation.origin],
+            translator[relation.destination]
         ));
 
         // Number of followers a person has
