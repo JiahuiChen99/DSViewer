@@ -62,8 +62,13 @@ function echartsSeriesLink(relationships) {
             relation.origin,
             relation.destination
         ));
+
+        // Number of followers a person has
+        user_followers[relation.destination] = relation.destination in user_followers ?
+            (user_followers[relation.destination] + 1) : 1;
     });
 
+    store.commit('setUserFollowers', user_followers);
     // Save to vuex
     store.commit('setGraphsLinks', series_links);
 }
