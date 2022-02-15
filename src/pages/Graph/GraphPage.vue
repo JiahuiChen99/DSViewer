@@ -1,5 +1,6 @@
 <template>
-    <section class="flex w-full h-full " id="graph">
+    <section class="flex w-full h-full" id="graph">
+        <!-- TODO: Resize Echarts canvas  -->
     </section>
 </template>
 
